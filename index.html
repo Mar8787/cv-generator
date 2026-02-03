@@ -7,6 +7,7 @@
     <title>Generador de CV</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="/style/style_index.css" rel="stylesheet">
 </head>
 
 <body>
@@ -14,37 +15,91 @@
         <h1>Generador de CV</h1>
     </div>
     <form class="container col-5 mt-5">
-        <div class="mb-3">
+        <div class="cnt-data mb-5">
             <h2>Datos personales</h2>
-            <label for="nameInput" class="form-label mt-3">Nombre y apellidos</label>
-            <input type="email" class="form-control" id="nameInput" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">Texto abajo</div>
 
-            <label for="exampleInputEmail1" class="form-label mt-3">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">Texto abajo</div>
+            <label for="nameInput" class="form-label mt-3">Nombre y apellidos <span class="text-danger">*</span></label>
+            <input id="nameInput" type="text" class="form-control" placeholder="Ej. Josefa Sánchez Pérez"
+                aria-describedby="nameHelp" required>
+            <div id="nameHelp" class="form-text">Introduce tu nombre y apellidos completos.</div>
+
+            <label for="professionInput" class="form-label mt-3">Profesión <span class="text-danger">*</span></label>
+            <input id="professionInput" type="text" class="form-control" placeholder="Ej. Developer"
+                aria-describedby="professionHelp" required>
+            <div id="professionHelp" class="form-text">Describe tu profesión en una palabra.</div>
+
+            <label for="tlfInput" class="form-label mt-3">Teléfono <span class="text-danger">*</span></label>
+            <input id="tlfInput" type="tel" class="form-control" placeholder="Ej. 999 99 99 99"
+                aria-describedby="tlfHelp" required>
+            <div id="tlfHelp" class="form-text">No compartiremos tu teléfono con terceros.</div>
+
+            <label for="emailInput" class="form-label mt-3">Correo electrónico <span
+                    class="text-danger">*</span></label>
+            <input id="emailInput" type="email" class="form-control" placeholder="Ej. ejemplo@gmail.com"
+                aria-describedby="emailHelp" required>
+            <div id="emailHelp" class="form-text">No compartiremos tu email con terceros.</div>
+
+            <label for="adressInput" class="form-label mt-3">Localidad de residencia <span
+                    class="text-danger">*</span></label>
+            <input id="adressInput" type="email" class="form-control" placeholder="Ej. Jerez (Cádiz)"
+                aria-describedby="adressHelp" required>
+            <div id="adressHelp" class="form-text">Introduce tu localidad y provincia (entre paréntesis).</div>
+
+            <label for="aboutMe" class="form-label mt-3">Sobre tí <span class="text-danger">*</span></label>
+            <textarea id="aboutMe" class="form-control" rows="5" maxlength="250" aria-describedby="aboutHelp" required
+                placeholder="Ej. Desarrolladora de aplicaciones web, con formación en Java, MySQL, HTML, CSS, JS y PHP. Especializada en programación orientada a objetos y desarrollo backend."></textarea>
+            <div id="aboutHelp" class="form-text">Describete en menos de 250 caracteres.</div>
         </div>
-        <div class="mb-3">
+
+        <div class="cnt-data mb-5">
             <h2>Experiencia laboral</h2>
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+
+            <label for="companyInput" class="form-label mt-3">Empresa <span class="text-danger">*</span></label>
+            <input id="companyInput" type="text" class="form-control" placeholder="Ej. Amazon"
+                aria-describedby="companyHelp" required>
+            <div id="companyHelp" class="form-text">Introduce el nombre de la empresa donde trabajaste.</div>
+
+            <label for="positionInput" class="form-label mt-3">Puesto <span class="text-danger">*</span></label>
+            <input id="positionInput" type="text" class="form-control" placeholder="Ej. Developer backend"
+                aria-describedby="positionHelp" required>
+            <div id="positionHelp" class="form-text">Introduce puesto que desempeñabas en la empresa.</div>
+
+            <label for="dateInput" class="form-label mt-3">Fecha de inicio <span class="text-danger">*</span></label>
+            <input id="dateInput" type="date" class="form-control" aria-describedby="dateHelp" required>
+            <div id="dateHelp" class="form-text">Introduce la fecha de inicio de tu actividad en la empresa.</div>
+
+            <label for="dateInput" class="form-label mt-3">Fecha de finalización</label>
+            <input id="dateInput" type="date" class="form-control" aria-describedby="dateHelp">
+            <div id="dateHelp" class="form-text">Si finalizaste este empleo, introduce la fecha.</div>
+
+            <label for="descriptionInput" class="form-label mt-3">Descripción del puesto</label>
+            <textarea id="descriptionInput" class="form-control" rows="5" maxlength="250" aria-describedby="descriptionHelp" required
+                placeholder="Ej. Desarrollo y personalización de sitios web corporativos con HTML5, CSS3 y JS, aplicando estilos responsivos."></textarea>
+            <div id="descriptionHelp" class="form-text">Describe tu puesto de trabajo en menos de 250 caracteres.</div>
         </div>
-        <div class="mb-3">
+
+        <div class="cnt-data mb-5">
             <h2>Formación académica</h2>
+
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1">
         </div>
-        <div class="mb-3">
+
+        <div class="cnt-data mb-5">
             <h2>Habilidades</h2>
+
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1">
         </div>
-        <div class="mb-3">
+
+        <div class="cnt-data mb-5">
             <h2>Idiomas</h2>
+
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1">
         </div>
-        <div class="mb-3">
+
+        <div class="cnt-data mb-3">
             <h2>Foto</h2>
             <!-- Meter para subir foto aquí, opcional -->
         </div>

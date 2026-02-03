@@ -1,0 +1,16 @@
+body {
+    background-color: #BBBBBB;
+}
+
+/* Containers with the information */
+.cnt-data {
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 50px;
+    background-color: #ffff;
+}
+
+/* Textarea for description */
+#aboutMe {
+    resize: none;
+}
