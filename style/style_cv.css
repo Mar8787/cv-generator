@@ -1,78 +1,80 @@
+/* ======== ESTILOS GENERALES ======== */
+
 body {
     background-color: #F1F5F9;
     color: rgb(21, 9, 128);
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/* ======== CONTENEDOR PRINCIPAL (FOLIO) ======== */
+
 .padre {
     width: 45%;
     margin: 0 auto;
     padding: 20px;
-    align-items: center;
-    /* para que quede todo en el centro */
     box-shadow: 0 0 10px black;
-    /* sombra alrededor del cv */
-    height: 93vh;
+    background-color: white;
+
+    display: flex;
+    align-items: stretch;
+
+    gap: 1rem;              /* separación entre columna azul y general (~2-3 cm visuales) */
+
+    min-height: 93vh;
+    height: auto;
 }
 
+/* ======== COLUMNA LATERAL (AZUL) ======== */
+
 .lateral {
-    width: 31.1%;
-    height: 93vh;
+    flex: 0 0 35%;          /* más ancha (antes 31.1%) */
     background-color: #216b9c;
-    margin-left: 3%;
-    float: left;
-    /* para que se coloque al lado de general */
     color: white;
 }
 
+/* ======== COLUMNA GENERAL ======== */
+
 .general {
-    width: 100%;
-    height: 93vh;
+    flex: 1;
+    padding-left: 0.25rem;  /* separación mínima extra (además del gap) */
 }
 
+/* ======== CABECERA ======== */
+
 .cabecera {
-    height: 20%;
     background-color: #003775;
     margin-top: 3%;
     color: white;
+    padding-bottom: 3%;
 }
 
-#foto {
-    padding: 15%;
-    width: 70%;
-    border-radius: 100%;
-}
-
-.contacto {
-    margin-top: -20%;
-}
+/* ======== TIPOGRAFÍA Y ESPACIADOS GENERAL (YA SIN 35%) ======== */
 
 h1 {
     padding-top: 4%;
-    padding-left: 35%;
+    padding-left: 3%;
     font-size: 5vh;
     margin-bottom: 0%;
 }
 
 h2 {
-    padding-left: 35%;
+    padding-left: 3%;
     font-size: 3vh;
     margin-top: 1%;
 }
 
 .h3-general {
-    padding-left: 35%;
+    padding-left: 3%;
     font-size: 2.5vh;
 }
 
 .h4-general {
-    padding-left: 35%;
+    padding-left: 3%;
     font-size: 1.75vh;
-
 }
 
 .p-general {
-    padding-left: 35%;
+    padding-left: 3%;
     padding-right: 3%;
     font-size: 1.5vh;
     text-align: justify;
@@ -80,28 +82,35 @@ h2 {
 
 #lista-general {
     font-size: 1.5vh;
-    padding-left: 37%;
+    padding-left: 5%;
     padding-right: 3%;
 }
 
 .hr-general {
     border: 1px solid #003775;
-    /* grosor, estilo, color */
-    width: 63%;
-    margin-left: 35%;
+    width: 95%;
+    margin-left: 3%;
     margin-top: 3%;
-}
-
-.hr-lateral {
-    border: 1px solid white;
-    width: 90%;
-    margin-left: 5%;
-    margin-top: 11%;
-    margin-bottom: 0%;
 }
 
 .sobre-mi {
     margin-top: 4%;
+}
+
+/* ======== FOTO ======== */
+
+#foto {
+    padding: 15%;
+    width: 70%;
+    border-radius: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+/* ======== LATERAL ======== */
+
+.contacto {
+    margin-top: -20%;
 }
 
 .h-contacto {
@@ -120,16 +129,11 @@ h2 {
     padding-left: 5%;
     margin-right: 5%;
     font-size: 1.5vh;
-    height: 1.5%;
-    align-items: center;
-    /* para que se alinee el texto con el icono */
 }
 
 #icono {
     width: 10%;
     vertical-align: middle;
-    /* para alinear el icono con el texto vericalmente */
-    align-items: center;
 }
 
 #lista-lateral {
@@ -145,6 +149,16 @@ h2 {
     margin-bottom: -2%;
 }
 
+.hr-lateral {
+    border: 1px solid white;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 11%;
+    margin-bottom: 0%;
+}
+
+/* ======== BLOQUES ======== */
+
 .SAM {
     margin-top: 5%;
 }
@@ -153,75 +167,57 @@ a {
     color: white;
 }
 
-/* Media queries al reducir pantalla */
+/* ======== MEDIA QUERY ALTURA PEQUEÑA ======== */
 
 @media (max-height: 900px) {
     .padre {
-        height: 100%;
+        min-height: auto;
         padding: 15px;
     }
 
-    .lateral {
-        height: auto;
-        width: 35%;
-    }
-
-    .general {
-        height: auto;
-    }
-
     h1 {
-        padding-left: 40%;
         font-size: 3.75vh;
+        padding-left: 3%;
     }
 
     h2 {
-        padding-left: 40%;
         font-size: 2.75vh;
+        padding-left: 3%;
     }
 
-    .h3-general, .p-general {
-        padding-left: 40%;
-
-    }
-
+    .h3-general,
+    .p-general,
     .h4-general {
-        padding-left: 40%;
-        font-size: 1.75vh;
+        padding-left: 3%;
     }
 
     #lista-general {
-        padding-left: 47%;
-
+        padding-left: 6%;
     }
 
     .hr-general {
-        width: 60%;
-        margin-left: 40%;
+        width: 95%;
+        margin-left: 3%;
     }
-
 }
 
-/* Media queries para móviles */
+/* ======== MÓVILES ======== */
+
 @media (max-width: 430px) {
     .padre {
         width: 90%;
-        height: auto;
+        flex-direction: column;
         padding: 10px;
+        gap: 0;                /* en móvil no hace falta hueco entre columnas */
     }
 
-    .lateral {
+    .lateral,
+    .general {
         width: 100%;
-        height: auto;
-        margin-left: 0;
-        padding-bottom: 5%;
-        float: none;
-        /* Cambiado a none para que no se coloque al lado, si no arriba de general */
     }
 
     .general {
-        width: 100%;
-        height: auto;
+        padding-left: 0;
     }
 
     h1 {
@@ -248,15 +244,10 @@ a {
 
     h2,
     .h3-general {
-        padding-left: 5%;
-        padding-right: 5%;
         font-size: 2.9vh;
     }
 
-
-
     .cabecera {
-        height: auto;
         margin-top: 2%;
         padding: 10px;
         text-align: center;
@@ -266,9 +257,7 @@ a {
         width: 40%;
         padding: 5%;
         display: block;
-        /* para que la imagen se convierta en un bloque y funcione el 0 auto del margin*/
         margin: 0 auto;
-        /* din margen arriba y abajo y auto a los lados, asi se centra en horizontal */
     }
 
     .hr-general {
@@ -317,60 +306,49 @@ a {
     }
 }
 
-/* Media queries para tablets  */
+/* ======== TABLETS ======== */
+
 @media (max-width: 1024px) and (min-width: 600px) {
     .padre {
         width: 95%;
-        height: 145vh;
-        padding: 15px;
+        gap: 1.5rem;
     }
 
     .lateral {
-        width: 43%;
-        height: auto;
-        /* altura auto para que se adapte al contenido */
-        margin-left: 2%;
-        float: left;
-    }
-
-    .general {
-        width: 55%;
-        height: auto;
-        float: right;
+        flex: 0 0 43%;
     }
 
     h1 {
         font-size: 4vh;
-        padding-left: 7%;
+        padding-left: 3%;
     }
 
     h2 {
         font-size: 2.5vh;
-        padding-left: 7%;
+        padding-left: 3%;
     }
 
     .h4-general,
     .p-general,
     #lista-general {
-        padding-left: 7%;
+        padding-left: 3%;
         padding-right: 5%;
         font-size: 2vh;
     }
 
     .h3-general {
-        padding-left: 7%;
+        padding-left: 3%;
         padding-right: 5%;
         font-size: 2.9vh;
     }
 
     #lista-general {
-        padding-left: 12.5%;
+        padding-left: 7%;
         padding-right: 5%;
         font-size: 2vh;
     }
 
     .cabecera {
-        height: auto;
         margin-top: 2%;
         padding: 10px;
     }
@@ -383,8 +361,8 @@ a {
     }
 
     .hr-general {
-        width: 90%;
-        margin-left: 7%;
+        width: 95%;
+        margin-left: 3%;
     }
 
     #lista-lateral,
