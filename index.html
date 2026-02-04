@@ -14,7 +14,7 @@
     <div class="title-web container text-center mt-5">
         <h1>Generador de CV</h1>
     </div>
-    <form class="container col-5 mt-5">
+    <form class="container col-5 mt-5" method="post" enctype="multipart/form-data">
         <div class="cnt-data mb-5">
             <h2>Datos personales</h2>
 
@@ -64,48 +64,102 @@
                 aria-describedby="positionHelp" required>
             <div id="positionHelp" class="form-text">Introduce puesto que desempeñabas en la empresa.</div>
 
-            <label for="dateInput" class="form-label mt-3">Fecha de inicio <span class="text-danger">*</span></label>
-            <input id="dateInput" type="date" class="form-control" aria-describedby="dateHelp" required>
-            <div id="dateHelp" class="form-text">Introduce la fecha de inicio de tu actividad en la empresa.</div>
+            <div id="cnt-dates1" class="row">
+                <div class="col-md-6">
+                    <label for="startDate1" class="form-label mt-3">Fecha de inicio <span
+                            class="text-danger">*</span></label>
+                    <input id="startDate1" type="date" class="form-control" aria-describedby="startDateHelp1" required>
+                    <div id="startDateHelp1" class="form-text">Introduce la fecha de inicio.</div>
+                </div>
 
-            <label for="dateInput" class="form-label mt-3">Fecha de finalización</label>
-            <input id="dateInput" type="date" class="form-control" aria-describedby="dateHelp">
-            <div id="dateHelp" class="form-text">Si finalizaste este empleo, introduce la fecha.</div>
+                <div class="col-md-6">
+                    <label for="endDate1" class="form-label mt-3">Fecha de finalización</label>
+                    <input id="endDate1" type="date" class="form-control" aria-describedby="endDateHelp1">
+                    <div id="endDateHelp1" class="form-text">Si finalizaste este empleo, introduce la fecha.</div>
+                </div>
+            </div>
 
-            <label for="descriptionInput" class="form-label mt-3">Descripción del puesto</label>
-            <textarea id="descriptionInput" class="form-control" rows="5" maxlength="250" aria-describedby="descriptionHelp" required
+            <label for="descriptionInput1" class="form-label mt-3">Descripción del puesto</label>
+            <textarea id="descriptionInput1" class="form-control" rows="5" maxlength="250"
+                aria-describedby="descriptionHelp1" required
                 placeholder="Ej. Desarrollo y personalización de sitios web corporativos con HTML5, CSS3 y JS, aplicando estilos responsivos."></textarea>
-            <div id="descriptionHelp" class="form-text">Describe tu puesto de trabajo en menos de 250 caracteres.</div>
+            <div id="descriptionHelp1" class="form-text">Describe tu puesto de trabajo en menos de 250 caracteres.</div>
         </div>
 
         <div class="cnt-data mb-5">
             <h2>Formación académica</h2>
 
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label for="schoolInput" class="form-label mt-3">Nombre del centro de estudios <span
+                    class="text-danger">*</span></label>
+            <input id="schoolInput" type="text" class="form-control" placeholder="Ej. Universidad de Cádiz"
+                aria-describedby="schoolHelp" required>
+            <div id="schoolHelp" class="form-text">Introduce el nombre del centro donde estudiaste.</div>
+
+            <label for="qualificationInput" class="form-label mt-3">Título <span class="text-danger">*</span></label>
+            <input id="qualificationInput" type="text" class="form-control" placeholder="Ej. Graduado en CC Ambientales"
+                aria-describedby="qualificationHelp" required>
+            <div id="qualificationHelp" class="form-text">Introduce el título obtenido en estos estudios.</div>
+
+            <div id="cnt-dates2" class="row">
+                <div class="col-md-6">
+                    <label for="startDate2" class="form-label mt-3">Fecha de inicio <span
+                            class="text-danger">*</span></label>
+                    <input id="startDate2" type="date" class="form-control" aria-describedby="startDateHelp2" required>
+                    <div id="startDateHelp2" class="form-text">Introduce la fecha de inicio.</div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="endDate" class="form-label mt-3">Fecha de finalización</label>
+                    <input id="endDate" type="date" class="form-control" aria-describedby="endDateHelp">
+                    <div id="endDateHelp" class="form-text">Si finalizaste estos estudios, introduce la fecha.</div>
+                </div>
+            </div>
+
+            <label for="descriptionInput2" class="form-label mt-3">Aptitudes adquiridas</label>
+            <textarea id="descriptionInput2" class="form-control" rows="5" maxlength="250"
+                aria-describedby="descriptionHelp2" required
+                placeholder="Ej. Gestión y análisis de datos con criterios de calidad. Documentación técnica clara y precisa. Rigurosidad, organización y resolución de problemas."></textarea>
+            <div id="descriptionHelp2" class="form-text">Describe tu formación en menos de 250 caracteres.</div>
         </div>
 
         <div class="cnt-data mb-5">
-            <h2>Habilidades</h2>
+            <h2>Información adicional</h2>
 
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>
+            <label for="skillsInput" class="form-label mt-3">Habilidades <span class="text-danger">*</span></label>
+            <input id="skillsInput" type="text" class="form-control"
+                placeholder="Ej. Asertiva, facilidad para el trabajo en equipo, emprendedora. Poseo el permiso de conducción en regla."
+                aria-describedby="skillsHelp" required>
+            <div id="skillsHelp" class="form-text">Incluye habilidades e información que pueda ser interesante.</div>
 
-        <div class="cnt-data mb-5">
-            <h2>Idiomas</h2>
-
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label for="languagesInput" class="form-label mt-3">Idiomas</label>
+            <input id="languagesInput" type="text" class="form-control" placeholder="Ej. Inglés C1"
+                aria-describedby="languagesHelp">
+            <div id="languagesHelp" class="form-text">Introduce los idiomas que conoces y su cualificación de uno en uno.</div>
         </div>
 
         <div class="cnt-data mb-3">
             <h2>Foto</h2>
-            <!-- Meter para subir foto aquí, opcional -->
+
+            <label for="photoInput" class="form-label mt-3">Sube una foto</label>
+            <input id="photoInput" name="photo" type="file" class="form-control" accept="image/*"
+                aria-describedby="photoHelp">
+            <div id="photoHelp" class="form-text">Opcional.</div>
         </div>
 
-        <button type="submit" class="btn btn-primary text-end">Submit</button>
+        <div id="cnt-submit" class="text-end">
+            <button type="submit" class="btn btn-primary text-end">Enviar</button>
+        </div>
     </form>
+
+    <footer class="bg-dark text-light mt-5">
+        <div class="container py-4">
+            <div class="row align-items-center">
+                <div class="text-center">
+                    <p class="mb-0">© 2026 · Generador de CV · Mar Sánchez Sevillano · 2ºDAW</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
