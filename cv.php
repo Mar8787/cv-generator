@@ -4,25 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style_cv.css">
+    <link rel="stylesheet" href="style/style_cv.css">
     <title>Curriculum VitaeV</title>
 </head>
-
-
-
-
 
 <body>
     <div id="father">
         <div class="left-sidebar">
-            <img id="photo" src="/assets/carnet.jpg" alt="foto carnet">
+            <img id="photo" src="assets/usuario-generico.png" alt="foto carnet">
             <div id="contact">
                 <h3 class="title-h" id="h-contact">Contacto</h3>
-                <p id="tlf" class="p-left-sidebar"><img class="icon" src="/assets/telefono.png" alt="icono movil">
+                <p id="tlf" class="p-left-sidebar"><img class="icon" src="assets/telefono.png" alt="icono movil">
                     999999999</p>
-                <p id="email" class="p-left-sidebar"><img class="icon" src="/assets/mail.png" alt="icono mail">
+                <p id="email" class="p-left-sidebar"><img class="icon" src="assets/mail.png" alt="icono mail">
                     ejemplo@gmail.com</p>
-                <p id="adress" class="p-left-sidebar"><img class="icon" src="/assets/casa.png" alt="icono casa"> Ciudad
+                <p id="adress" class="p-left-sidebar"><img class="icon" src="assets/casa.png" alt="icono casa"> Ciudad
                     (Provincia)</p>
             </div>
 

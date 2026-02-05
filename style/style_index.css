@@ -11,7 +11,7 @@ body {
 }
 
 /* Textarea for description */
-#about {
+textarea {
     resize: none;
 }
 
@@ -23,4 +23,36 @@ body {
   right: 20px;
   display: none;
   z-index: 999;
+}
+
+.panel{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.2);
+  border-radius:10px;
+  padding:16px;
+  position: sticky;
+  top: 20px;
+}
+
+.panel h3{
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+}
+
+.version-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  padding:8px 0;
+  border-bottom:1px solid rgba(0,0,0,.08);
+}
+.version-item:last-child{ 
+    border-bottom:0;
+}
+
+.version-actions a{
+  text-decoration:none;
+  margin-left:8px;
+  font-size:.9rem;
 }
