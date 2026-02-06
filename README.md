@@ -8,3 +8,6 @@ O también puedes entrar en http://localhost/phpmyadmin/ pulsar la pestaña SQL,
 pegar el código SQL en la consola que ofrece la página y pulsar "Continuar". 
 
 Con estos pasos crearás la base de datos para poder ejecutar la app web.
+
+Para ejecutar la app, guarda la carpeta cv-generator en la carpeta "htdocs", si instalaste XAMPP en el disco C: la ruta será C:\xampp\htdocs.
+En un navegador escribe http://localhost/cv-generator/index.php para acceder a la app web.
