@@ -1,9 +1,14 @@
 <?php
+
+// Hace la conexión con la db. DIR para que no falle la ruta relativa
 require __DIR__ . "/data-base/connection.php";
 
-$v = (int)($_GET["v"] ?? 0);
-
-// Security
+/**
+ * Security
+ * Summary of e
+ * @param mixed $s
+ * @return string
+ */
 function e($s) {
     return htmlspecialchars((string)$s, ENT_QUOTES, "UTF-8");
 }
@@ -12,13 +17,10 @@ function e($s) {
 $stmt = $pdo->query("SELECT id, version_num, created_date FROM cv_versions ORDER BY version_num DESC");
 $versions = $stmt->fetchAll();
 
-// Last version
-if ($v <= 0 && !empty($versions)) {
-    $v = (int)$versions[0]["version_num"];
-}
-
-// CV data
+// CV data. (PDO -> PHP Data Objects, is the connection with db)
 $old = null;
+$v = (int)($_GET["v"] ?? 0);
+
 if ($v > 0) {
     $stmt = $pdo->prepare("SELECT * FROM cv_versions WHERE version_num = ?");
     $stmt->execute([$v]);
@@ -55,31 +57,23 @@ if ($v > 0) {
             <!-- Left, versions -->
             <aside class="col-12 col-lg-3">
                 <div class="panel">
-                    <h3 class="mb-2">Versiones</h3>
+                    <h3 class="mb-2">Todos tus CV</h3>
 
                     <?php if (empty($versions)): ?>
                         <p class="text-muted mb-0">No hay versiones aún, guarda un CV.</p>
                     <?php else: ?>
-                        <?php foreach ($versions as $ver): ?>
-                            <?php $isActive = ($v === (int)$ver["version_num"]); ?>
+                        <?php foreach ($versions as $version): ?>
+                            <?php $isActive = ($v === (int)$version["version_num"]); ?>
                             <div class="version-item">
                                 <div>
-                                    <div class="<?= $isActive ? "fw-bold" : "" ?>">v<?= (int)$ver["version_num"] ?></div>
-                                    <small class="text-muted"><?= e($ver["created_date"]) ?></small>
+                                    <div class="<?= $isActive ? "fw-bold" : "" ?>">Versión <?= (int)$version["version_num"] ?></div>
+                                    <small class="text-muted"><?= e($version["created_date"]) ?></small>
                                 </div>
                                 <div class="version-actions text-end">
-                                    <a class="link-primary" href="index.php?v=<?= (int)$ver["version_num"] ?>">Cargar</a>
+                                    <a class="link-primary" href="index.php?v=<?= (int)$version["version_num"] ?>">Cargar</a>
                                 </div>
                             </div>
                         <?php endforeach; ?>
-                    <?php endif; ?>
-
-                    <?php if ($v > 0): ?>
-                        <div class="mt-3">
-                            <a class="btn btn-sm btn-outline-secondary w-100" href="cv.php?v=<?= (int)$v ?>">
-                                Abrir CV imprimible
-                            </a>
-                        </div>
                     <?php endif; ?>
                 </div>
             </aside>
@@ -208,7 +202,8 @@ if ($v > 0) {
                         <div id="photo-help" class="form-text">Opcional.</div>
                     </div>
 
-                    <div class="text-end">
+                    <div class="text-end d-flex justify-content-end gap-2">
+                        <a href="index.php" class="btn btn-outline-primary">Limpiar formulario</a>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
 
@@ -221,15 +216,9 @@ if ($v > 0) {
                     <h3>Acciones</h3>
 
                     <?php if ($v > 0 && $old): ?>
-                        <a class="btn btn-sm btn-outline-primary w-100 mb-2" href="cv.php?v=<?= (int)$v ?>">
-                            Ver CV (imprimible)
-                        </a>
+                        <a class="btn btn-sm btn-outline-primary w-100 mb-2" href="cv.php?v=<?= (int)$v ?>">Abrir CV</a>
 
-                        <a class="btn btn-sm btn-outline-danger w-100"
-                            href="delete.php?id=<?= (int)$old["id"] ?>"
-                            onclick="return confirm('¿Eliminar la versión v<?= (int)$v ?>?')">
-                            Eliminar versión
-                        </a>
+                        <a class="btn btn-sm btn-outline-danger w-100" href="delete.php?id=<?= (int)$old["id"] ?>" onclick="return confirm('¿Eliminar la versión v<?= (int)$v ?>?')">Eliminar versión</a>
                     <?php else: ?>
                         <p class="text-muted mb-0">Guarda un CV para activar las acciones.</p>
                     <?php endif; ?>
