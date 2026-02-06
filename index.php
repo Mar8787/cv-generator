@@ -75,7 +75,7 @@ if ($v > 0) {
                                 </div>
                             </div>
                         <?php endforeach; ?>
-                        
+
                     <?php endif; ?>
                 </div>
             </aside>
@@ -222,7 +222,7 @@ if ($v > 0) {
 
                         <a class="btn btn-sm btn-outline-danger w-100" href="delete.php?id=<?= (int)$old["id"] ?>" onclick="return confirm('¿Eliminar la versión <?= (int)$v ?>?')">Eliminar versión</a>
                     <?php else: ?>
-                        <p class="text-muted mb-0">Guarda un CV para activar las acciones.</p>
+                        <p class="text-muted mb-0">Crea o selecciona un CV para activar las acciones.</p>
                     <?php endif; ?>
                 </div>
             </aside>
