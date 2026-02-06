@@ -34,13 +34,13 @@ $info = [
     "position" => post("position"),
     "work_start" => post("work_start"),
     "work_end" => trim((string)($_POST["work_end"] ?? "")) ?: null, // Because it is not a required field, if it is empty, null is stored.
-    "work_description" => post("work_description"),
+    "work_description" => trim((string)($_POST["work_description"] ?? "")) ?: null,
 
     "school" => post("school"),
     "qualification" => post("qualification"),
     "edu_start" => post("edu_start"),
     "edu_end" => trim((string)($_POST["edu_end"] ?? "")) ?: null,
-    "edu_description" => post("edu_description"),
+    "edu_description" => trim((string)($_POST["edu_description"] ?? "")) ?: null,
 
     "skills" => post("skills"),
     "languages" => trim((string)($_POST["languages"] ?? "")) ?: null,
@@ -133,4 +133,7 @@ $stmt->execute([
     ":languages" => $info["languages"],
     ":photo_path" => $photoPath,
 ]);
+
+// Redirect to the main page after saving
+header("Location: index.php?v=0");
 exit;

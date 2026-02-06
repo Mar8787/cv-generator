@@ -4,7 +4,7 @@ body {
 
 /* Containers with the information */
 .cnt-data {
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 50px;
     background-color: #ffff;
 }

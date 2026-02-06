@@ -4,12 +4,12 @@
 require __DIR__ . "/data-base/connection.php";
 
 /**
- * Security
- * Summary of e
+ * Security, normalize user input
+ * Summary of normalizeInput
  * @param mixed $s
  * @return string
  */
-function e($s) {
+function normalizeInput($s) {
     return htmlspecialchars((string)$s, ENT_QUOTES, "UTF-8");
 }
 
@@ -67,10 +67,10 @@ if ($v > 0) {
                             <div class="version-item">
                                 <div>
                                     <div class="<?= $isActive ? "fw-bold" : "" ?>">Versión <?= (int)$version["version_num"] ?></div>
-                                    <small class="text-muted"><?= e($version["created_date"]) ?></small>
+                                    <small class="text-muted"><?= normalizeInput($version["created_date"]) ?></small>
                                 </div>
                                 <div class="version-actions text-end">
-                                    <a class="link-primary" href="index.php?v=<?= (int)$version["version_num"] ?>">Cargar</a>
+                                    <a class="btn btn-outline-primary" href="index.php?v=<?= (int)$version["version_num"] ?>">Cargar</a>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -88,27 +88,27 @@ if ($v > 0) {
 
                         <label for="name-input" class="form-label mt-3">Nombre y apellidos <span class="text-danger">*</span>
                         </label>
-                        <input id="name-input" name="full_name" type="text" class="form-control" placeholder="Ej. Josefa Sánchez Pérez" aria-describedby="name-help" required value="<?= e($old["full_name"] ?? "") ?>">
+                        <input id="name-input" name="full_name" type="text" class="form-control" placeholder="Ej. Josefa Sánchez Pérez" aria-describedby="name-help" required value="<?= normalizeInput($old["full_name"] ?? "") ?>">
                         <div id="name-help" class="form-text">Introduce tu nombre y apellidos completos.</div>
 
                         <label for="profession-input" class="form-label mt-3">Profesión <span class="text-danger">*</span></label>
-                        <input id="profession-input" name="profession" type="text" class="form-control" placeholder="Ej. Developer" aria-describedby="profession-help" required value="<?= e($old["profession"] ?? "") ?>">
+                        <input id="profession-input" name="profession" type="text" class="form-control" placeholder="Ej. Developer" aria-describedby="profession-help" required value="<?= normalizeInput($old["profession"] ?? "") ?>">
                         <div id="profession-help" class="form-text">Describe tu profesión en una palabra.</div>
 
                         <label for="tlf-input" class="form-label mt-3">Teléfono <span class="text-danger">*</span></label>
-                        <input id="tlf-input" name="phone" type="tel" class="form-control" placeholder="Ej. 999 99 99 99" aria-describedby="tlf-help" required value="<?= e($old["phone"] ?? "") ?>">
+                        <input id="tlf-input" name="phone" type="tel" class="form-control" placeholder="Ej. 999 99 99 99" aria-describedby="tlf-help" required value="<?= normalizeInput($old["phone"] ?? "") ?>">
                         <div id="tlf-help" class="form-text">No compartiremos tu teléfono con terceros.</div>
 
                         <label for="email-input" class="form-label mt-3">Correo electrónico <span class="text-danger">*</span></label>
-                        <input id="email-input" name="email" type="email" class="form-control" placeholder="Ej. ejemplo@gmail.com" aria-describedby="email-help" required value="<?= e($old["email"] ?? "") ?>">
+                        <input id="email-input" name="email" type="email" class="form-control" placeholder="Ej. ejemplo@gmail.com" aria-describedby="email-help" required value="<?= normalizeInput($old["email"] ?? "") ?>">
                         <div id="email-help" class="form-text">No compartiremos tu email con terceros.</div>
 
                         <label for="adress-input" class="form-label mt-3">Localidad de residencia <span class="text-danger">*</span></label>
-                        <input id="adress-input" name="address" type="text" class="form-control" placeholder="Ej. Jerez (Cádiz)" aria-describedby="adress-help" required value="<?= e($old["address"] ?? "") ?>">
+                        <input id="adress-input" name="address" type="text" class="form-control" placeholder="Ej. Jerez (Cádiz)" aria-describedby="adress-help" required value="<?= normalizeInput($old["address"] ?? "") ?>">
                         <div id="adress-help" class="form-text">Introduce tu localidad y provincia (entre paréntesis).</div>
 
                         <label for="about" class="form-label mt-3">Sobre ti <span class="text-danger">*</span></label>
-                        <textarea id="about" name="about" class="form-control" rows="5" maxlength="250" aria-describedby="about-help" required placeholder="Ej. Desarrolladora de aplicaciones web..."><?= e($old["about"] ?? "") ?></textarea>
+                        <textarea id="about" name="about" class="form-control" rows="5" maxlength="250" aria-describedby="about-help" required placeholder="Ej. Desarrolladora de aplicaciones web..."><?= normalizeInput($old["about"] ?? "") ?></textarea>
                         <div id="about-help" class="form-text">Descríbete en menos de 250 caracteres.</div>
                     </div>
 
@@ -118,29 +118,29 @@ if ($v > 0) {
 
                         <label for="company-input" class="form-label mt-3">Empresa <span class="text-danger">*</span>
                         </label>
-                        <input id="company-input" name="company" type="text" class="form-control" placeholder="Ej. Amazon" aria-describedby="company-help" required value="<?= e($old["company"] ?? "") ?>">
+                        <input id="company-input" name="company" type="text" class="form-control" placeholder="Ej. Amazon" aria-describedby="company-help" required value="<?= normalizeInput($old["company"] ?? "") ?>">
                         <div id="company-help" class="form-text">Introduce el nombre de la empresa donde trabajaste.</div>
 
                         <label for="position-input" class="form-label mt-3">Puesto <span class="text-danger">*</span></label>
-                        <input id="position-input" name="position" type="text" class="form-control" placeholder="Ej. Developer backend" aria-describedby="position-help" required value="<?= e($old["position"] ?? "") ?>">
+                        <input id="position-input" name="position" type="text" class="form-control" placeholder="Ej. Developer backend" aria-describedby="position-help" required value="<?= normalizeInput($old["position"] ?? "") ?>">
                         <div id="position-help" class="form-text">Introduce puesto que desempeñabas en la empresa.</div>
 
                         <div id="cnt-dates-work" class="row">
                             <div class="col-md-6">
                                 <label for="start-date-work" class="form-label mt-3">Fecha de inicio <span class="text-danger">*</span></label>
-                                <input id="start-date-work" name="work_start" type="date" class="form-control" aria-describedby="start-date-help-work" required value="<?= e($old["work_start"] ?? "") ?>">
+                                <input id="start-date-work" name="work_start" type="date" class="form-control" aria-describedby="start-date-help-work" required value="<?= normalizeInput($old["work_start"] ?? "") ?>">
                                 <div id="start-date-help-work" class="form-text">Introduce la fecha de inicio.</div>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="end-date-work" class="form-label mt-3">Fecha de finalización</label>
-                                <input id="end-date-work" name="work_end" type="date" class="form-control" aria-describedby="end-date-help-work" value="<?= e($old["work_end"] ?? "") ?>">
+                                <input id="end-date-work" name="work_end" type="date" class="form-control" aria-describedby="end-date-help-work" value="<?= normalizeInput($old["work_end"] ?? "") ?>">
                                 <div id="end-date-help-work" class="form-text"> Si finalizaste este empleo, introduce la fecha.</div>
                             </div>
                         </div>
 
                         <label for="description-input-work" class="form-label mt-3">Descripción del puesto</label>
-                        <textarea id="description-input-work" name="work_description" class="form-control" rows="5" maxlength="250" aria-describedby="description-help-work" required placeholder="Ej. Desarrollo y personalización de sitios web."><?= e($old["work_description"] ?? "") ?></textarea>
+                        <textarea id="description-input-work" name="work_description" class="form-control" rows="5" maxlength="250" aria-describedby="description-help-work" placeholder="Ej. Desarrollo y personalización de sitios web."><?= normalizeInput($old["work_description"] ?? "") ?></textarea>
                         <div id="description-help-work" class="form-text">Describe tu puesto de trabajo en menos de 250 caracteres.</div>
                     </div>
 
@@ -149,29 +149,29 @@ if ($v > 0) {
                         <h2>Formación académica</h2>
 
                         <label for="school-input" class="form-label mt-3">Nombre del centro de estudios <span class="text-danger">*</span></label>
-                        <input id="school-input" name="school" type="text" class="form-control" placeholder="Ej. Universidad de Cádiz" aria-describedby="school-help" required value="<?= e($old["school"] ?? "") ?>">
+                        <input id="school-input" name="school" type="text" class="form-control" placeholder="Ej. Universidad de Cádiz" aria-describedby="school-help" required value="<?= normalizeInput($old["school"] ?? "") ?>">
                         <div id="school-help" class="form-text">Introduce el nombre del centro donde estudiaste.</div>
 
                         <label for="qualification-input" class="form-label mt-3">Título <span class="text-danger">*</span></label>
-                        <input id="qualification-input" name="qualification" type="text" class="form-control" placeholder="Ej. Graduado en CC Ambientales" aria-describedby="qualification-help" required value="<?= e($old["qualification"] ?? "") ?>">
+                        <input id="qualification-input" name="qualification" type="text" class="form-control" placeholder="Ej. Graduado en CC Ambientales" aria-describedby="qualification-help" required value="<?= normalizeInput($old["qualification"] ?? "") ?>">
                         <div id="qualification-help" class="form-text">Introduce el título obtenido en estos estudios.</div>
 
                         <div id="cnt-dates-edu" class="row">
                             <div class="col-md-6">
                                 <label for="start-date-edu" class="form-label mt-3">Fecha de inicio <span class="text-danger">*</span></label>
-                                <input id="start-date-edu" name="edu_start" type="date" class="form-control" aria-describedby="start-date-help-edu" required value="<?= e($old["edu_start"] ?? "") ?>">
+                                <input id="start-date-edu" name="edu_start" type="date" class="form-control" aria-describedby="start-date-help-edu" required value="<?= normalizeInput($old["edu_start"] ?? "") ?>">
                                 <div id="start-date-help-edu" class="form-text">Introduce la fecha de inicio.</div>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="end-date-edu" class="form-label mt-3">Fecha de finalización</label>
-                                <input id="end-date-edu" name="edu_end" type="date" class="form-control" aria-describedby="end-date-help-edu" value="<?= e($old["edu_end"] ?? "") ?>">
+                                <input id="end-date-edu" name="edu_end" type="date" class="form-control" aria-describedby="end-date-help-edu" value="<?= normalizeInput($old["edu_end"] ?? "") ?>">
                                 <div id="end-date-help-edu" class="form-text">Si finalizaste estos estudios, introduce la fecha.</div>
                             </div>
                         </div>
 
                         <label for="description-input-edu" class="form-label mt-3">Aptitudes adquiridas</label>
-                        <textarea id="description-input-edu" name="edu_description" class="form-control" rows="5" maxlength="250" aria-describedby="description-help-edu" required placeholder="Ej. Gestión y análisis de datos..."><?= e($old["edu_description"] ?? "") ?></textarea>
+                        <textarea id="description-input-edu" name="edu_description" class="form-control" rows="5" maxlength="250" aria-describedby="description-help-edu" placeholder="Ej. Gestión y análisis de datos..."><?= normalizeInput($old["edu_description"] ?? "") ?></textarea>
                         <div id="description-help-edu" class="form-text">Describe tu formación en menos de 250 caracteres.</div>
                     </div>
 
@@ -180,11 +180,11 @@ if ($v > 0) {
                         <h2>Información adicional</h2>
 
                         <label for="skills-input" class="form-label mt-3">Habilidades <span class="text-danger">*</span></label>
-                        <input id="skills-input" name="skills" type="text" class="form-control" placeholder="Ej. Asertiva, facilidad para el trabajo en equipo, emprendedora." aria-describedby="skills-help" required value="<?= e($old["skills"] ?? "") ?>">
+                        <input id="skills-input" name="skills" type="text" class="form-control" placeholder="Ej. Asertiva, facilidad para el trabajo en equipo, emprendedora." aria-describedby="skills-help" required value="<?= normalizeInput($old["skills"] ?? "") ?>">
                         <div id="skills-help" class="form-text">Incluye habilidades e información que pueda ser interesante.</div>
 
                         <label for="languages-input" class="form-label mt-3">Idiomas</label>
-                        <input id="languages-input" name="languages" type="text" class="form-control" placeholder="Ej. Inglés C1" aria-describedby="languages-help" value="<?= e($old["languages"] ?? "") ?>">
+                        <input id="languages-input" name="languages" type="text" class="form-control" placeholder="Ej. Inglés C1" aria-describedby="languages-help" value="<?= normalizeInput($old["languages"] ?? "") ?>">
                         <div id="languages-help" class="form-text">Introduce los idiomas que conoces y su cualificación.</div>
                     </div>
 
@@ -194,7 +194,7 @@ if ($v > 0) {
 
                         <?php if (!empty($old["photo_path"])): ?>
                             <p class="form-text">Foto actual:</p>
-                            <img src="<?= e($old["photo_path"]) ?>" style="max-width:120px;border-radius:10px;">
+                            <img src="<?= normalizeInput($old["photo_path"]) ?>" style="max-width:120px;border-radius:10px;">
                         <?php endif; ?>
 
                         <label for="photo-input" class="form-label mt-3">Sube una foto</label>
@@ -218,7 +218,7 @@ if ($v > 0) {
                     <?php if ($v > 0 && $old): ?>
                         <a class="btn btn-sm btn-outline-primary w-100 mb-2" href="cv.php?v=<?= (int)$v ?>">Abrir CV</a>
 
-                        <a class="btn btn-sm btn-outline-danger w-100" href="delete.php?id=<?= (int)$old["id"] ?>" onclick="return confirm('¿Eliminar la versión v<?= (int)$v ?>?')">Eliminar versión</a>
+                        <a class="btn btn-sm btn-outline-danger w-100" href="delete.php?id=<?= (int)$old["id"] ?>" onclick="return confirm('¿Eliminar la versión <?= (int)$v ?>?')">Eliminar versión</a>
                     <?php else: ?>
                         <p class="text-muted mb-0">Guarda un CV para activar las acciones.</p>
                     <?php endif; ?>
