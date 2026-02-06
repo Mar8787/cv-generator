@@ -1,6 +1,6 @@
 <?php
 
-// Hace la conexión con la db. DIR para que no falle la ruta relativa
+// Connects to the database. DIR prevents relative path errors
 require __DIR__ . "/data-base/connection.php";
 
 /**
