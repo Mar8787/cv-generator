@@ -1,4 +1,5 @@
 -- Copia el siguiente schema para generar la db en XAMPP
+-- Instrucciones en README
 
 CREATE DATABASE IF NOT EXISTS cv_generator
 CHARACTER SET utf8mb4

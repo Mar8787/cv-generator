@@ -24,7 +24,8 @@ textarea {
   z-index: 999;
 }
 
-.panel{
+/* Panels left, right and center  */
+.panel {
   background:#fff;
   border:1px solid rgba(0,0,0,.2);
   border-radius:10px;
@@ -33,12 +34,12 @@ textarea {
   top: 20px;
 }
 
-.panel h3{
+.panel h3 {
   font-size: 1.05rem;
   margin-bottom: 12px;
 }
 
-.version-item{
+.version-item {
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -46,11 +47,13 @@ textarea {
   padding:8px 0;
   border-bottom:1px solid rgba(0,0,0,.08);
 }
-.version-item:last-child{ 
+
+/* The last one without border */
+.version-item:last-child { 
     border-bottom:0;
 }
 
-.version-actions a{
+.version-actions a {
   text-decoration:none;
   margin-left:8px;
   font-size:.9rem;

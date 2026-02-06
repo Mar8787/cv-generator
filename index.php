@@ -62,6 +62,7 @@ if ($v > 0) {
                     <?php if (empty($versions)): ?>
                         <p class="text-muted mb-0">No hay versiones aún, guarda un CV.</p>
                     <?php else: ?>
+
                         <?php foreach ($versions as $version): ?>
                             <?php $isActive = ($v === (int)$version["version_num"]); ?>
                             <div class="version-item">
@@ -74,6 +75,7 @@ if ($v > 0) {
                                 </div>
                             </div>
                         <?php endforeach; ?>
+                        
                     <?php endif; ?>
                 </div>
             </aside>
@@ -216,7 +218,7 @@ if ($v > 0) {
                     <h3>Acciones</h3>
 
                     <?php if ($v > 0 && $old): ?>
-                        <a class="btn btn-sm btn-outline-primary w-100 mb-2" href="cv.php?v=<?= (int)$v ?>">Abrir CV</a>
+                        <a class="btn btn-sm btn-outline-primary w-100 mb-2" href="cv.php?v=<?= (int)$v ?>" target="_blank">Abrir CV</a>
 
                         <a class="btn btn-sm btn-outline-danger w-100" href="delete.php?id=<?= (int)$old["id"] ?>" onclick="return confirm('¿Eliminar la versión <?= (int)$v ?>?')">Eliminar versión</a>
                     <?php else: ?>
