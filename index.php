@@ -3,12 +3,6 @@
 // Connects to the database. DIR prevents relative path errors
 require __DIR__ . "/data-base/connection.php";
 
-function noNumber($s) {
-    if (!ctype_alpha($s)) {
-        echo "Error: Solo se permiten letras.";
-    }
-}
-
 /**
  * Security, normalize user input
  * Summary of normalizeInput
@@ -96,7 +90,7 @@ if ($v > 0) {
 
                         <label for="name-input" class="form-label mt-3">Nombre y apellidos <span class="text-danger">*</span>
                         </label>
-                        <input id="name-input" name="full_name" type="text" class="form-control" placeholder="Ej. Josefa Sánchez Pérez" aria-describedby="name-help" required value="<?= noNumber($old["full_name"] ?? "") && normalizeInput($old["full_name"] ?? "") ?>">
+                        <input id="name-input" name="full_name" type="text" class="form-control" placeholder="Ej. Josefa Sánchez Pérez" aria-describedby="name-help" required value="<?= normalizeInput($old["full_name"] ?? "") ?>">
                         <div id="name-help" class="form-text">Introduce tu nombre y apellidos completos.</div>
 
                         <label for="profession-input" class="form-label mt-3">Profesión <span class="text-danger">*</span></label>
