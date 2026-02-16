@@ -8,7 +8,7 @@ if ($id <= 0) {
     exit("Error en id.");
 }
 
-// Get the photo path to delete it from the disk
+// Get the photo path to delete it from the db
 $stmt = $pdo->prepare("SELECT photo_path FROM cv_versions WHERE id = ?");
 $stmt->execute([$id]);
 $row = $stmt->fetch();
