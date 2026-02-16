@@ -3,22 +3,52 @@
 // Connection with data base
 require __DIR__ . "/data-base/connection.php";
 
+session_start();
+
 /**
  * Summary of post.
  * @param mixed $key Table field (email, phone...)
  * @param mixed $necesary When true, the field is required
  * @return string
  */
-function post($key, $necesary = true)
-{
+function post($key, $necesary = true) {
     $val = trim((string)($_POST[$key] ?? ""));
 
     if ($necesary && $val === "") {
-        http_response_code(400);
-        exit("Falta el campo: $key");
+        return null;
     }
 
     return $val;
+}
+
+/**
+ * Allows letters and symbols in the input fields.
+ * Summary of onlyText
+ * @param mixed $s
+ * @return bool
+ */
+function onlyText($s) {
+    return (bool)preg_match('/^[\p{L}\s\.\,\-\(\)\@\#\/\&\:\;\!\%]+$/u', $s);
+}
+
+/**
+ * Validate the email input.
+ * Summary of validEmail
+ * @param mixed $s
+ * @return bool
+ */
+function validEmail($s) {
+    return filter_var($s, FILTER_VALIDATE_EMAIL) !== false;
+}
+
+/**
+ * Validate the phone input.
+ * Summary of validPhone
+ * @param mixed $s
+ * @return bool
+ */
+function validPhone($s) {
+    return (bool)preg_match('/^[0-9+\s-]{7,20}$/', $s);
 }
 
 // Create a associative array with the CV versions data
@@ -46,6 +76,55 @@ $info = [
     "languages" => trim((string)($_POST["languages"] ?? "")) ?: null,
 ];
 
+$errors = [];
+
+// Required fields validation
+$requiredKeys = ["full_name", "profession", "phone", "email", "address", "about", "company", "position", "work_start", "school", "qualification", "edu_start", "skills"];
+
+foreach ($requiredKeys as $k) {
+    if ($info[$k] === null) {
+        $errors[$k] = "Este campo es obligatorio.";
+    }
+}
+
+// Format validation
+$letterFields = ["full_name", "profession", "address", "qualification"];
+
+foreach ($letterFields as $field) {
+    if ($info[$field] !== null && !onlyText($info[$field])) {
+        $errors[$field] = "Formato no válido, no se permiten números.";
+    }
+}
+
+if ($info["email"] !== null && !validEmail($info["email"])) {
+    $errors["email"] = "El correo no tiene un formato válido.";
+}
+
+if ($info["phone"] !== null && !validPhone($info["phone"])) {
+    $errors["phone"] = "Teléfono no válido. Usa números, +, espacios o guiones.";
+}
+
+// Dates validation
+if ($info["work_start"] !== null && $info["work_end"] !== null) {
+    if ($info["work_end"] < $info["work_start"]) {
+        $errors["work_end"] = "La fecha de finalización no puede ser anterior a la fecha de inicio.";
+    }
+}
+
+if ($info["edu_start"] !== null && $info["edu_end"] !== null) {
+    if ($info["edu_end"] < $info["edu_start"]) {
+        $errors["edu_end"] = "La fecha de finalización no puede ser anterior a la fecha de inicio.";
+    }
+}
+
+// If there are errors, save them in the SESSION and return to the form
+if (!empty($errors)) {
+    $_SESSION["errors"] = $errors;
+    $_SESSION["old_post"] = $info;
+    header("Location: index.php?v=0");
+    exit;
+}
+
 // Next version
 $stmt = $pdo->query("SELECT COALESCE(MAX(version_num), 0) AS max_version FROM cv_versions");
 $versionNum = (int)$stmt->fetch()["max_version"] + 1;
@@ -61,8 +140,10 @@ if (!empty($_FILES["photo"]["name"]) && is_uploaded_file($_FILES["photo"]["tmp_n
 
     // Check if it exists
     if (!isset($allowedType[$extensionType])) {
-        http_response_code(400);
-        exit("Formato de foto no permitido. Usa JPG/PNG/WEBP.");
+        $_SESSION["errors"] = ["photo" => "Formato de foto no permitido. Usa JPG/PNG/WEBP."];
+        $_SESSION["old_post"] = $info;
+        header("Location: index.php?v=0");
+        exit;
     }
 
     $uploadDir = __DIR__ . "/uploads";

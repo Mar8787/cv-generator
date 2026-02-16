@@ -3,6 +3,18 @@
 // Connects to the database. DIR prevents relative path errors
 require __DIR__ . "/data-base/connection.php";
 
+session_start();
+
+$errors = $_SESSION["errors"] ?? [];
+$oldPost = $_SESSION["old_post"] ?? [];
+unset($_SESSION["errors"], $_SESSION["old_post"]);
+
+function noNumber($s) {
+    if (!ctype_alpha($s)) {
+        echo "Error: Solo se permiten letras.";
+    }
+}
+
 /**
  * Security, normalize user input
  * Summary of normalizeInput
@@ -11,6 +23,11 @@ require __DIR__ . "/data-base/connection.php";
  */
 function normalizeInput($s) {
     return htmlspecialchars((string)$s, ENT_QUOTES, "UTF-8");
+}
+
+// Returns submitted data, DB data, or empty string
+function fieldValue($key, $oldPost, $old) {
+    return $oldPost[$key] ?? ($old[$key] ?? "");
 }
 
 // CV versions
@@ -90,28 +107,70 @@ if ($v > 0) {
 
                         <label for="name-input" class="form-label mt-3">Nombre y apellidos <span class="text-danger">*</span>
                         </label>
-                        <input id="name-input" name="full_name" type="text" class="form-control" placeholder="Ej. Josefa Sánchez Pérez" aria-describedby="name-help" required value="<?= normalizeInput($old["full_name"] ?? "") ?>">
-                        <div id="name-help" class="form-text">Introduce tu nombre y apellidos completos.</div>
+                        <input id="name-input" name="full_name" type="text"
+                            class="form-control <?= !empty($errors["full_name"]) ? "is-invalid" : "" ?>"
+                            placeholder="Ej. Josefa Sánchez Pérez" aria-describedby="name-help"
+                            value="<?= normalizeInput(fieldValue("full_name", $oldPost, $old ?? [])) ?>">
+                        <?php if (!empty($errors["full_name"])): ?>
+                            <div class="invalid-feedback"><?= normalizeInput($errors["full_name"]) ?></div>
+                        <?php else: ?>
+                            <div id="name-help" class="form-text">Introduce tu nombre y apellidos completos.</div>
+                        <?php endif; ?>
 
                         <label for="profession-input" class="form-label mt-3">Profesión <span class="text-danger">*</span></label>
-                        <input id="profession-input" name="profession" type="text" class="form-control" placeholder="Ej. Developer" aria-describedby="profession-help" required value="<?= normalizeInput($old["profession"] ?? "") ?>">
-                        <div id="profession-help" class="form-text">Describe tu profesión en una palabra.</div>
+                        <input id="profession-input" name="profession" type="text"
+                            class="form-control <?= !empty($errors["profession"]) ? "is-invalid" : "" ?>"
+                            placeholder="Ej. Developer" aria-describedby="profession-help" 
+                            value="<?= normalizeInput(fieldValue("profession", $oldPost, $old ?? [])) ?>">
+                        <?php if (!empty($errors["profession"])): ?>
+                            <div class="invalid-feedback"><?= normalizeInput($errors["profession"]) ?></div>
+                        <?php else: ?>
+                            <div id="profession-help" class="form-text">Describe tu profesión en una palabra.</div>
+                        <?php endif; ?>
 
                         <label for="tlf-input" class="form-label mt-3">Teléfono <span class="text-danger">*</span></label>
-                        <input id="tlf-input" name="phone" type="tel" class="form-control" placeholder="Ej. 999 99 99 99" aria-describedby="tlf-help" required value="<?= normalizeInput($old["phone"] ?? "") ?>">
-                        <div id="tlf-help" class="form-text">No compartiremos tu teléfono con terceros.</div>
+                        <input id="tlf-input" name="phone" type="tel"
+                            class="form-control <?= !empty($errors["phone"]) ? "is-invalid" : "" ?>"
+                            placeholder="Ej. 999 99 99 99" aria-describedby="tlf-help" 
+                            value="<?= normalizeInput(fieldValue("phone", $oldPost, $old ?? [])) ?>">
+                        <?php if (!empty($errors["phone"])): ?>
+                            <div class="invalid-feedback"><?= normalizeInput($errors["phone"]) ?></div>
+                        <?php else: ?>
+                            <div id="tlf-help" class="form-text">No compartiremos tu teléfono con terceros.</div>
+                        <?php endif; ?>
 
                         <label for="email-input" class="form-label mt-3">Correo electrónico <span class="text-danger">*</span></label>
-                        <input id="email-input" name="email" type="email" class="form-control" placeholder="Ej. ejemplo@gmail.com" aria-describedby="email-help" required value="<?= normalizeInput($old["email"] ?? "") ?>">
-                        <div id="email-help" class="form-text">No compartiremos tu email con terceros.</div>
+                        <input id="email-input" name="email" type="text"
+                            class="form-control <?= !empty($errors["email"]) ? "is-invalid" : "" ?>"
+                            placeholder="Ej. ejemplo@gmail.com" aria-describedby="email-help" 
+                            value="<?= normalizeInput(fieldValue("email", $oldPost, $old ?? [])) ?>">
+                        <?php if (!empty($errors["email"])): ?>
+                            <div class="invalid-feedback"><?= normalizeInput($errors["email"]) ?></div>
+                        <?php else: ?>
+                            <div id="email-help" class="form-text">No compartiremos tu email con terceros.</div>
+                        <?php endif; ?>
 
                         <label for="adress-input" class="form-label mt-3">Localidad de residencia <span class="text-danger">*</span></label>
-                        <input id="adress-input" name="address" type="text" class="form-control" placeholder="Ej. Jerez (Cádiz)" aria-describedby="adress-help" required value="<?= normalizeInput($old["address"] ?? "") ?>">
-                        <div id="adress-help" class="form-text">Introduce tu localidad y provincia (entre paréntesis).</div>
+                        <input id="adress-input" name="address" type="text"
+                            class="form-control <?= !empty($errors["address"]) ? "is-invalid" : "" ?>"
+                            placeholder="Ej. Jerez (Cádiz)" aria-describedby="adress-help" 
+                            value="<?= normalizeInput(fieldValue("address", $oldPost, $old ?? [])) ?>">
+                        <?php if (!empty($errors["address"])): ?>
+                            <div class="invalid-feedback"><?= normalizeInput($errors["address"]) ?></div>
+                        <?php else: ?>
+                            <div id="adress-help" class="form-text">Introduce tu localidad y provincia (entre paréntesis).</div>
+                        <?php endif; ?>
 
                         <label for="about" class="form-label mt-3">Sobre ti <span class="text-danger">*</span></label>
-                        <textarea id="about" name="about" class="form-control" rows="5" maxlength="250" aria-describedby="about-help" required placeholder="Ej. Desarrolladora de aplicaciones web..."><?= normalizeInput($old["about"] ?? "") ?></textarea>
-                        <div id="about-help" class="form-text">Descríbete en menos de 250 caracteres.</div>
+                        <textarea id="about" name="about"
+                            class="form-control <?= !empty($errors["about"]) ? "is-invalid" : "" ?>"
+                            rows="5" maxlength="250" aria-describedby="about-help" 
+                            placeholder="Ej. Desarrolladora de aplicaciones web..."><?= normalizeInput(fieldValue("about", $oldPost, $old ?? [])) ?></textarea>
+                        <?php if (!empty($errors["about"])): ?>
+                            <div class="invalid-feedback"><?= normalizeInput($errors["about"]) ?></div>
+                        <?php else: ?>
+                            <div id="about-help" class="form-text">Descríbete en menos de 250 caracteres.</div>
+                        <?php endif; ?>
                     </div>
 
                     <!-- Work experience -->
@@ -120,29 +179,58 @@ if ($v > 0) {
 
                         <label for="company-input" class="form-label mt-3">Empresa <span class="text-danger">*</span>
                         </label>
-                        <input id="company-input" name="company" type="text" class="form-control" placeholder="Ej. Amazon" aria-describedby="company-help" required value="<?= normalizeInput($old["company"] ?? "") ?>">
-                        <div id="company-help" class="form-text">Introduce el nombre de la empresa donde trabajaste.</div>
+                        <input id="company-input" name="company" type="text"
+                            class="form-control <?= !empty($errors["company"]) ? "is-invalid" : "" ?>"
+                            placeholder="Ej. Amazon" aria-describedby="company-help" 
+                            value="<?= normalizeInput(fieldValue("company", $oldPost, $old ?? [])) ?>">
+                        <?php if (!empty($errors["company"])): ?>
+                            <div class="invalid-feedback"><?= normalizeInput($errors["company"]) ?></div>
+                        <?php else: ?>
+                            <div id="company-help" class="form-text">Introduce el nombre de la empresa donde trabajaste.</div>
+                        <?php endif; ?>
 
                         <label for="position-input" class="form-label mt-3">Puesto <span class="text-danger">*</span></label>
-                        <input id="position-input" name="position" type="text" class="form-control" placeholder="Ej. Developer backend" aria-describedby="position-help" required value="<?= normalizeInput($old["position"] ?? "") ?>">
-                        <div id="position-help" class="form-text">Introduce puesto que desempeñabas en la empresa.</div>
+                        <input id="position-input" name="position" type="text"
+                            class="form-control <?= !empty($errors["position"]) ? "is-invalid" : "" ?>"
+                            placeholder="Ej. Developer backend" aria-describedby="position-help" 
+                            value="<?= normalizeInput(fieldValue("position", $oldPost, $old ?? [])) ?>">
+                        <?php if (!empty($errors["position"])): ?>
+                            <div class="invalid-feedback"><?= normalizeInput($errors["position"]) ?></div>
+                        <?php else: ?>
+                            <div id="position-help" class="form-text">Introduce puesto que desempeñabas en la empresa.</div>
+                        <?php endif; ?>
 
                         <div id="cnt-dates-work" class="row">
                             <div class="col-md-6">
                                 <label for="start-date-work" class="form-label mt-3">Fecha de inicio <span class="text-danger">*</span></label>
-                                <input id="start-date-work" name="work_start" type="date" class="form-control" aria-describedby="start-date-help-work" required value="<?= normalizeInput($old["work_start"] ?? "") ?>">
-                                <div id="start-date-help-work" class="form-text">Introduce la fecha de inicio.</div>
+                                <input id="start-date-work" name="work_start" type="date"
+                                    class="form-control <?= !empty($errors["work_start"]) ? "is-invalid" : "" ?>"
+                                    aria-describedby="start-date-help-work" 
+                                    value="<?= normalizeInput(fieldValue("work_start", $oldPost, $old ?? [])) ?>">
+                                <?php if (!empty($errors["work_start"])): ?>
+                                    <div class="invalid-feedback"><?= normalizeInput($errors["work_start"]) ?></div>
+                                <?php else: ?>
+                                    <div id="start-date-help-work" class="form-text">Introduce la fecha de inicio.</div>
+                                <?php endif; ?>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="end-date-work" class="form-label mt-3">Fecha de finalización</label>
-                                <input id="end-date-work" name="work_end" type="date" class="form-control" aria-describedby="end-date-help-work" value="<?= normalizeInput($old["work_end"] ?? "") ?>">
-                                <div id="end-date-help-work" class="form-text"> Si finalizaste este empleo, introduce la fecha.</div>
+                                <input id="end-date-work" name="work_end" type="date"
+                                    class="form-control <?= !empty($errors["work_end"]) ? "is-invalid" : "" ?>"
+                                    aria-describedby="end-date-help-work"
+                                    value="<?= normalizeInput(fieldValue("work_end", $oldPost, $old ?? [])) ?>">
+                                <?php if (!empty($errors["work_end"])): ?>
+                                    <div class="invalid-feedback"><?= normalizeInput($errors["work_end"]) ?></div>
+                                <?php else: ?>
+                                    <div id="end-date-help-work" class="form-text"> Si finalizaste este empleo, introduce la fecha.</div>
+                                <?php endif; ?>
                             </div>
                         </div>
 
                         <label for="description-input-work" class="form-label mt-3">Descripción del puesto</label>
-                        <textarea id="description-input-work" name="work_description" class="form-control" rows="5" maxlength="250" aria-describedby="description-help-work" placeholder="Ej. Desarrollo y personalización de sitios web."><?= normalizeInput($old["work_description"] ?? "") ?></textarea>
+                        <textarea id="description-input-work" name="work_description" class="form-control" rows="5" maxlength="250"
+                            aria-describedby="description-help-work" placeholder="Ej. Desarrollo y personalización de sitios web."><?= normalizeInput(fieldValue("work_description", $oldPost, $old ?? [])) ?></textarea>
                         <div id="description-help-work" class="form-text">Describe tu puesto de trabajo en menos de 250 caracteres.</div>
                     </div>
 
@@ -151,29 +239,58 @@ if ($v > 0) {
                         <h2>Formación académica</h2>
 
                         <label for="school-input" class="form-label mt-3">Nombre del centro de estudios <span class="text-danger">*</span></label>
-                        <input id="school-input" name="school" type="text" class="form-control" placeholder="Ej. Universidad de Cádiz" aria-describedby="school-help" required value="<?= normalizeInput($old["school"] ?? "") ?>">
-                        <div id="school-help" class="form-text">Introduce el nombre del centro donde estudiaste.</div>
+                        <input id="school-input" name="school" type="text"
+                            class="form-control <?= !empty($errors["school"]) ? "is-invalid" : "" ?>"
+                            placeholder="Ej. Universidad de Cádiz" aria-describedby="school-help" 
+                            value="<?= normalizeInput(fieldValue("school", $oldPost, $old ?? [])) ?>">
+                        <?php if (!empty($errors["school"])): ?>
+                            <div class="invalid-feedback"><?= normalizeInput($errors["school"]) ?></div>
+                        <?php else: ?>
+                            <div id="school-help" class="form-text">Introduce el nombre del centro donde estudiaste.</div>
+                        <?php endif; ?>
 
                         <label for="qualification-input" class="form-label mt-3">Título <span class="text-danger">*</span></label>
-                        <input id="qualification-input" name="qualification" type="text" class="form-control" placeholder="Ej. Graduado en CC Ambientales" aria-describedby="qualification-help" required value="<?= normalizeInput($old["qualification"] ?? "") ?>">
-                        <div id="qualification-help" class="form-text">Introduce el título obtenido en estos estudios.</div>
+                        <input id="qualification-input" name="qualification" type="text"
+                            class="form-control <?= !empty($errors["qualification"]) ? "is-invalid" : "" ?>"
+                            placeholder="Ej. Graduado en CC Ambientales" aria-describedby="qualification-help" 
+                            value="<?= normalizeInput(fieldValue("qualification", $oldPost, $old ?? [])) ?>">
+                        <?php if (!empty($errors["qualification"])): ?>
+                            <div class="invalid-feedback"><?= normalizeInput($errors["qualification"]) ?></div>
+                        <?php else: ?>
+                            <div id="qualification-help" class="form-text">Introduce el título obtenido en estos estudios.</div>
+                        <?php endif; ?>
 
                         <div id="cnt-dates-edu" class="row">
                             <div class="col-md-6">
                                 <label for="start-date-edu" class="form-label mt-3">Fecha de inicio <span class="text-danger">*</span></label>
-                                <input id="start-date-edu" name="edu_start" type="date" class="form-control" aria-describedby="start-date-help-edu" required value="<?= normalizeInput($old["edu_start"] ?? "") ?>">
-                                <div id="start-date-help-edu" class="form-text">Introduce la fecha de inicio.</div>
+                                <input id="start-date-edu" name="edu_start" type="date"
+                                    class="form-control <?= !empty($errors["edu_start"]) ? "is-invalid" : "" ?>"
+                                    aria-describedby="start-date-help-edu" 
+                                    value="<?= normalizeInput(fieldValue("edu_start", $oldPost, $old ?? [])) ?>">
+                                <?php if (!empty($errors["edu_start"])): ?>
+                                    <div class="invalid-feedback"><?= normalizeInput($errors["edu_start"]) ?></div>
+                                <?php else: ?>
+                                    <div id="start-date-help-edu" class="form-text">Introduce la fecha de inicio.</div>
+                                <?php endif; ?>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="end-date-edu" class="form-label mt-3">Fecha de finalización</label>
-                                <input id="end-date-edu" name="edu_end" type="date" class="form-control" aria-describedby="end-date-help-edu" value="<?= normalizeInput($old["edu_end"] ?? "") ?>">
-                                <div id="end-date-help-edu" class="form-text">Si finalizaste estos estudios, introduce la fecha.</div>
+                                <input id="end-date-edu" name="edu_end" type="date"
+                                    class="form-control <?= !empty($errors["edu_end"]) ? "is-invalid" : "" ?>"
+                                    aria-describedby="end-date-help-edu"
+                                    value="<?= normalizeInput(fieldValue("edu_end", $oldPost, $old ?? [])) ?>">
+                                <?php if (!empty($errors["edu_end"])): ?>
+                                    <div class="invalid-feedback"><?= normalizeInput($errors["edu_end"]) ?></div>
+                                <?php else: ?>
+                                    <div id="end-date-help-edu" class="form-text">Si finalizaste estos estudios, introduce la fecha.</div>
+                                <?php endif; ?>
                             </div>
                         </div>
 
                         <label for="description-input-edu" class="form-label mt-3">Aptitudes adquiridas</label>
-                        <textarea id="description-input-edu" name="edu_description" class="form-control" rows="5" maxlength="250" aria-describedby="description-help-edu" placeholder="Ej. Gestión y análisis de datos..."><?= normalizeInput($old["edu_description"] ?? "") ?></textarea>
+                        <textarea id="description-input-edu" name="edu_description" class="form-control" rows="5" maxlength="250"
+                            aria-describedby="description-help-edu" placeholder="Ej. Gestión y análisis de datos..."><?= normalizeInput(fieldValue("edu_description", $oldPost, $old ?? [])) ?></textarea>
                         <div id="description-help-edu" class="form-text">Describe tu formación en menos de 250 caracteres.</div>
                     </div>
 
@@ -182,11 +299,20 @@ if ($v > 0) {
                         <h2>Información adicional</h2>
 
                         <label for="skills-input" class="form-label mt-3">Habilidades <span class="text-danger">*</span></label>
-                        <input id="skills-input" name="skills" type="text" class="form-control" placeholder="Ej. Asertiva, facilidad para el trabajo en equipo, emprendedora." aria-describedby="skills-help" required value="<?= normalizeInput($old["skills"] ?? "") ?>">
-                        <div id="skills-help" class="form-text">Incluye habilidades e información que pueda ser interesante.</div>
+                        <input id="skills-input" name="skills" type="text"
+                            class="form-control <?= !empty($errors["skills"]) ? "is-invalid" : "" ?>"
+                            placeholder="Ej. Asertiva, facilidad para el trabajo en equipo, emprendedora." aria-describedby="skills-help" 
+                            value="<?= normalizeInput(fieldValue("skills", $oldPost, $old ?? [])) ?>">
+                        <?php if (!empty($errors["skills"])): ?>
+                            <div class="invalid-feedback"><?= normalizeInput($errors["skills"]) ?></div>
+                        <?php else: ?>
+                            <div id="skills-help" class="form-text">Incluye habilidades e información que pueda ser interesante.</div>
+                        <?php endif; ?>
 
                         <label for="languages-input" class="form-label mt-3">Idiomas</label>
-                        <input id="languages-input" name="languages" type="text" class="form-control" placeholder="Ej. Inglés C1" aria-describedby="languages-help" value="<?= normalizeInput($old["languages"] ?? "") ?>">
+                        <input id="languages-input" name="languages" type="text" class="form-control"
+                            placeholder="Ej. Inglés C1" aria-describedby="languages-help"
+                            value="<?= normalizeInput(fieldValue("languages", $oldPost, $old ?? [])) ?>">
                         <div id="languages-help" class="form-text">Introduce los idiomas que conoces y su cualificación.</div>
                     </div>
 
@@ -200,8 +326,14 @@ if ($v > 0) {
                         <?php endif; ?>
 
                         <label for="photo-input" class="form-label mt-3">Sube una foto</label>
-                        <input id="photo-input" name="photo" type="file" class="form-control" accept="image/*" aria-describedby="photo-help">
-                        <div id="photo-help" class="form-text">Opcional.</div>
+                        <input id="photo-input" name="photo" type="file"
+                            class="form-control <?= !empty($errors["photo"]) ? "is-invalid" : "" ?>"
+                            accept="image/*" aria-describedby="photo-help">
+                        <?php if (!empty($errors["photo"])): ?>
+                            <div class="invalid-feedback"><?= normalizeInput($errors["photo"]) ?></div>
+                        <?php else: ?>
+                            <div id="photo-help" class="form-text">Opcional.</div>
+                        <?php endif; ?>
                     </div>
 
                     <div class="text-end d-flex justify-content-end gap-2">
